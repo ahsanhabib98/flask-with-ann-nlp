@@ -1,7 +1,8 @@
 venv
 .git
 .idea
-upload_file/
+upload_file/*
+!upload_file/.gitkeep
 __pycache__
 __pycache__/
 *.pyc
