@@ -33,7 +33,7 @@ def predict_file_type():
         file.save(file_path)
         result = prediction(file_path)
         print(result)
-        return 'Your file is {} format'.format(str(result))
+        return 'The file is {} format'.format(str(result))
     return None
 
 
