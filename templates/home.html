@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo">Machine Learning</a>
+        </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+          <br><br>
+          <h1 class="header center orange-text">ANN-NLP model</h1>
+          <div class="row center">
+            <h5 class="header col s12 light">Upload file and predict the text file format
+            <br>
+            </h5>
+          </div>
+          <div class="row">
+            <form id="fileForm" method="post" enctype="multipart/form-data">
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>Upload File</span>
+                    <input type="file" name="file" id="fileUpload">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+            </form>
+            <div class="file-section" style="display:none;">
+
+                <div>
+                    <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
+                </div>
+            </div>
+
+            <div class="loader" style="display:none;"></div>
+
+            <h3 id="result">
+                <span> </span>
+            </h3>
+          </div>
+        </div>
+    </div>
+    <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+    </footer>
+    <script>
+        $(document).ready(function () {
+            // Init
+            $('.loader').hide();
+            $('#result').hide();
+
+
+            $("#fileUpload").change(function () {
+                $('.file-section').show();
+                $('#btn-predict').show();
+                $('#result').hide();
+            });
+
+            // Predict
+            $('#btn-predict').click(function () {
+                var form_data = new FormData($('#fileForm')[0]);
+                console.log('form data');
+
+                // Show loading animation
+                $(this).hide();
+                $('.loader').show();
+
+                // Make prediction by calling api /predict
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict',
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    async: true,
+                    success: function (data) {
+                        // Get and display the result
+                        $('.loader').hide();
+                        $('#result').fadeIn(600);
+                        $('#result').text(' Result:  ' + data);
+                        console.log('Success!');
+                    },
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
