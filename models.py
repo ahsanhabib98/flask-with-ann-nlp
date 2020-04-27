@@ -16,8 +16,10 @@ from sklearn.pipeline import Pipeline
 
 import warnings
 import pickle
+import nltk
 
 warnings.filterwarnings("ignore")
+nltk.download('stopwords')
 
 # file type
 file_type = ["cantera", "chemkin"]
