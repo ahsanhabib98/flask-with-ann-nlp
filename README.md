@@ -1,7 +1,7 @@
 # Flask + ANN-NLP model
 Run the following command:
 ```
-open cmd
+git clone https://github.com/ahsanhabib98/flask-with-ann-nlp.git
 cd flask-with-ann-nlp
 pip install -r requirements.txt
 set FLASK_ENV=development
